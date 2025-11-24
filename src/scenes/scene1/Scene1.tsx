@@ -1,10 +1,6 @@
 import type { Puzzle } from "@/scenes/config/scenesConfig";
 import { useModal } from "@/lib/hooks/useModal";
-import { Sudoku } from "@/scenes/scene1/puzzles/sudoku/Sudoku";
-import {
-  initialGrid,
-  solutionGrid,
-} from "@/scenes/scene1/puzzles/sudoku/config";
+import { Cookies } from "./puzzles/cookies/Cookies";
 import { useGame } from "@/scenes/config/useGame";
 import { PuzzleCompleted } from "@/components/display/PuzzleCompleted/PuzzleCompleted";
 import { Puzzles } from "@/scenes/config/scenesConfig";
@@ -21,15 +17,15 @@ type Props = {
 export const Scene1 = ({ puzzles }: Props) => {
   const { state, send } = useGame();
   const {
-    isModalOpen: isSudokuOpen,
-    openModal: openSudoku,
-    closeModal: closeSudoku,
+    isModalOpen: isCookiesOpen,
+    openModal: openCookies,
+    closeModal: closeCookies,
   } = useModal();
 
   const { solvedPuzzles } = state.context;
   const allPuzzlesSolved = puzzles.every((p) => solvedPuzzles[p.id]);
 
-  const background = "/images/scenes/scene1/scene1-background.png"
+  const background = "/images/scenes/scene1/scene1-background.png";
 
   useEffect(() => {
     if (allPuzzlesSolved) {
@@ -45,25 +41,21 @@ export const Scene1 = ({ puzzles }: Props) => {
     <SceneWrapper backgroundUrl={background}>
       <div className="w-full h-full relative">
         <PuzzleTrigger
-          image={puzzleConfig.sudoku.thumbnail}
-          alt="Open Sudoku"
-          className="w-[40px] lg:w-[50px] xl:w-[60px] 2xl:w-[70px] top-[62%] right-[20%]"
-          action={openSudoku}
+          image={puzzleConfig.cookies.thumbnail}
+          alt="Open Cookies"
+          className="w-[40px] lg:w-[50px] xl:w-[60px] 2xl:w-[70px] top-[74%] right-[58%]"
+          action={openCookies}
         />
 
-        <PuzzleModal isPuzzleOpen={isSudokuOpen} closePuzzle={closeSudoku}>
-          {solvedPuzzles[Puzzles.sudoku.name] ? (
+        <PuzzleModal isPuzzleOpen={isCookiesOpen} closePuzzle={closeCookies}>
+          {solvedPuzzles[Puzzles.cookies.name] ? (
             <PuzzleCompleted
-              text={puzzleConfig.sudoku.summary}
-              image={puzzleConfig.sudoku.image}
-              close={closeSudoku}
+              text={puzzleConfig.cookies.summary}
+              image={puzzleConfig.cookies.image}
+              close={closeCookies}
             />
           ) : (
-            <Sudoku
-              initialGrid={initialGrid}
-              solutionGrid={solutionGrid}
-              close={closeSudoku}
-            />
+            <Cookies close={closeCookies} />
           )}
         </PuzzleModal>
       </div>

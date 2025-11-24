@@ -44,28 +44,28 @@ export const Scene2 = ({ puzzles }: Props) => {
   return (
     <SceneWrapper backgroundUrl={background}>
       <div className="w-full h-full relative">
-                <PuzzleTrigger
-                  image={puzzleConfig.sudoku.thumbnail}
-                  alt="Open Sudoku"
-                  className="w-[40px] lg:w-[50px] xl:w-[60px] 2xl:w-[70px] top-[62%] right-[20%]"
-                  action={openSudoku}
-                />
-        
-                <PuzzleModal isPuzzleOpen={isSudokuOpen} closePuzzle={closeSudoku}>
-                  {solvedPuzzles[Puzzles.sudoku.name] ? (
-                    <PuzzleCompleted
-                      text={puzzleConfig.sudoku.summary}
-                      image={puzzleConfig.sudoku.image}
-                      close={closeSudoku}
-                    />
-                  ) : (
-                    <Sudoku
-                      initialGrid={initialGrid}
-                      solutionGrid={solutionGrid}
-                      close={closeSudoku}
-                    />
-                  )}
-                </PuzzleModal>
+        <PuzzleTrigger
+          image={puzzleConfig.sudoku.thumbnail}
+          alt="Open Sudoku"
+          className="w-[40px] lg:w-[50px] xl:w-[60px] 2xl:w-[70px] top-[62%] right-[20%]"
+          action={openSudoku}
+        />
+
+        <PuzzleModal isPuzzleOpen={isSudokuOpen} closePuzzle={closeSudoku}>
+          {solvedPuzzles[Puzzles.sudoku.name] ? (
+            <PuzzleCompleted
+              text={puzzleConfig.sudoku.summary}
+              image={puzzleConfig.sudoku.image}
+              close={closeSudoku}
+            />
+          ) : (
+            <Sudoku
+              initialGrid={initialGrid}
+              solutionGrid={solutionGrid}
+              close={closeSudoku}
+            />
+          )}
+        </PuzzleModal>
       </div>
     </SceneWrapper>
   );
