@@ -43,7 +43,7 @@ export const Scene1 = ({ puzzles }: Props) => {
         <PuzzleTrigger
           image={puzzleConfig.cookies.thumbnail}
           alt="Open Cookies"
-          className="w-[40px] lg:w-[50px] xl:w-[60px] 2xl:w-[70px] top-[74%] right-[58%]"
+          className="w-[70px] lg:w-[80px] xl:w-[100px] 2xl:w-[120px] top-[78%] right-[56%]"
           action={openCookies}
         />
 

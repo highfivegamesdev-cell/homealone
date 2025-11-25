@@ -52,7 +52,7 @@ export const Scene2 = ({ puzzles }: Props) => {
         />
 
         <PuzzleModal isPuzzleOpen={isSudokuOpen} closePuzzle={closeSudoku}>
-          {solvedPuzzles[Puzzles.sudoku.name] ? (
+          {solvedPuzzles[Puzzles.cookies.name] ? (
             <PuzzleCompleted
               text={puzzleConfig.sudoku.summary}
               image={puzzleConfig.sudoku.image}
