@@ -9,6 +9,7 @@ import { PuzzleModal } from "@/components/display/Modal/PuzzleModal";
 import { PuzzleTrigger } from "@/components/action/Button/PuzzleTrigger";
 import { SceneWrapper } from "@/components/layout/SceneWrapper";
 import { useEffect } from "react";
+import { OrnamentCode } from "./puzzles/ornamentCode/OrnamentCode";
 
 type Props = {
   puzzles: Puzzle[];
@@ -20,6 +21,12 @@ export const Scene1 = ({ puzzles }: Props) => {
     isModalOpen: isCookiesOpen,
     openModal: openCookies,
     closeModal: closeCookies,
+  } = useModal();
+
+  const {
+    isModalOpen: isOrnamentCodeOpen,
+    openModal: openOrnamentCode,
+    closeModal: closeOrnamentCode,
   } = useModal();
 
   const { solvedPuzzles } = state.context;
@@ -47,6 +54,13 @@ export const Scene1 = ({ puzzles }: Props) => {
           action={openCookies}
         />
 
+                <PuzzleTrigger
+          image={puzzleConfig.ornamentCode.thumbnail}
+          alt="Open Ornament Code"
+          className="w-[30px] lg:w-[45px] xl:w-[55px] 2xl:w-[65px] top-[36%] right-[47.5%]"
+          action={openOrnamentCode}
+        />
+
         <PuzzleModal isPuzzleOpen={isCookiesOpen} closePuzzle={closeCookies}>
           {solvedPuzzles[Puzzles.cookies.name] ? (
             <PuzzleCompleted
@@ -56,6 +70,18 @@ export const Scene1 = ({ puzzles }: Props) => {
             />
           ) : (
             <Cookies close={closeCookies} />
+          )}
+        </PuzzleModal>
+
+                <PuzzleModal isPuzzleOpen={isOrnamentCodeOpen} closePuzzle={closeOrnamentCode}>
+          {solvedPuzzles[Puzzles.ornamentCode.name] ? (
+            <PuzzleCompleted
+              text={puzzleConfig.ornamentCode.summary}
+              image={puzzleConfig.ornamentCode.image}
+              close={closeOrnamentCode}
+            />
+          ) : (
+            <OrnamentCode close={closeOrnamentCode} />
           )}
         </PuzzleModal>
       </div>
