@@ -81,7 +81,7 @@ export const OrnamentCode = ({ close }: Props) => {
         </p>
 
         <div className="mt-12 flex flex-col items-center">
-          <div className="p-8 bg-stone-50 rounded-lg border-2">
+          <div className="p-8 bg-amber-50 rounded-lg border-2">
             <div className="bg-neutral-600 h-16 rounded-lg border-4 border-white text-white flex items-center justify-center gap-4 text-xl font-bold shadow-[inset_4px_4px_8px_rgba(0,0,0,0.45)]">
               {inputCode.map((code) => (
                 <p>{code}</p>
