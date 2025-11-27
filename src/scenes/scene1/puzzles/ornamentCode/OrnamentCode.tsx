@@ -54,7 +54,7 @@ export const OrnamentCode = ({ close }: Props) => {
       } else {
         setTimeout(() => {
           setInputCode([]);
-        }, 500);
+        }, 600);
       }
     }
   }, [inputCode]);
