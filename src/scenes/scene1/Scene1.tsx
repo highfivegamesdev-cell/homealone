@@ -54,7 +54,7 @@ export const Scene1 = ({ puzzles }: Props) => {
           action={openCookies}
         />
 
-                <PuzzleTrigger
+        <PuzzleTrigger
           image={puzzleConfig.ornamentCode.thumbnail}
           alt="Open Ornament Code"
           className="w-[30px] lg:w-[45px] xl:w-[55px] 2xl:w-[65px] top-[36%] right-[47.5%]"
@@ -73,7 +73,10 @@ export const Scene1 = ({ puzzles }: Props) => {
           )}
         </PuzzleModal>
 
-                <PuzzleModal isPuzzleOpen={isOrnamentCodeOpen} closePuzzle={closeOrnamentCode}>
+        <PuzzleModal
+          isPuzzleOpen={isOrnamentCodeOpen}
+          closePuzzle={closeOrnamentCode}
+        >
           {solvedPuzzles[Puzzles.ornamentCode.name] ? (
             <PuzzleCompleted
               text={puzzleConfig.ornamentCode.summary}

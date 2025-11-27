@@ -26,9 +26,7 @@ export const Scene2 = ({ puzzles }: Props) => {
 
   return (
     <SceneWrapper backgroundUrl={background}>
-      <div className="w-full h-full relative">
-
-      </div>
+      <div className="w-full h-full relative"></div>
     </SceneWrapper>
   );
 };
