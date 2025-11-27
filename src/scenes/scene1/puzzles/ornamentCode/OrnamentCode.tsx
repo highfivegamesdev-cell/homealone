@@ -33,6 +33,7 @@ export const OrnamentCode = ({ close }: Props) => {
       } else {
         setTimeout(() => {
           setInputCode([]);
+          setHasError(true);
         }, 600);
       }
     }
