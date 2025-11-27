@@ -4,39 +4,11 @@ import { Puzzles } from "@/scenes/config/scenesConfig";
 import { GameEventTypes } from "@/scenes/config/gameMachine";
 import { useGame } from "@/scenes/config/useGame";
 import { puzzleConfig } from "@/scenes/scene1/config";
-
-const SOLUTION = [8, 7, 3];
+import { SOLUTION, padConfig, codeDisplayColors } from "./config";
 
 type Props = {
   close: () => void;
 };
-
-const padConfig = [
-  {
-    key: "1",
-    value: 1,
-  },
-  { key: "2", value: 2 },
-  { key: "3", value: 3 },
-  { key: "4", value: 4 },
-  { key: "5", value: 5 },
-  { key: "6", value: 6 },
-  {
-    key: "7",
-    value: 7,
-  },
-  { key: "8", value: 8 },
-  { key: "9", value: 9 },
-  { key: "#" },
-  { key: "0", value: 0 },
-  { key: "*" },
-];
-
-const displayColors: Record<number, string> = {
-  0: "text-yellow-500",
-  1: "text-grey-500",
-  2: "text-red-500",
-}
 
 export const OrnamentCode = ({ close }: Props) => {
   const [inputCode, setInputCode] = useState<number[]>([]);
@@ -93,7 +65,7 @@ export const OrnamentCode = ({ close }: Props) => {
           <div className="p-8 bg-amber-50 rounded-lg border-2">
             <div className="bg-neutral-600 h-16 rounded-lg border-4 border-white text-white flex items-center justify-center gap-4 text-xl font-bold shadow-[inset_4px_4px_8px_rgba(0,0,0,0.45)]">
               {hasError ? <p>Error!</p> : inputCode.map((code, index) => (
-                <p className={displayColors[index]}>{code}</p>
+                <p className={codeDisplayColors[index]}>{code}</p>
               ))}
             </div>
             <div className="grid grid-cols-3 gap-6 mt-6">
