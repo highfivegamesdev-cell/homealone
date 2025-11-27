@@ -32,13 +32,20 @@ const padConfig = [
   { key: "*" },
 ];
 
+const displayColors: Record<number, string> = {
+  0: "text-yellow-500",
+  1: "text-grey-500",
+  2: "text-red-500",
+}
+
 export const OrnamentCode = ({ close }: Props) => {
   const [inputCode, setInputCode] = useState<number[]>([]);
+  const [hasError, setHasError] = useState(false);
 
   const { send } = useGame();
 
   const checkSolution = (code: number[]) => {
-    return SOLUTION.every((num) => code.includes(num));
+    return SOLUTION.every((num, index) => num === code[index]);
   };
 
   useEffect(() => {
@@ -50,10 +57,11 @@ export const OrnamentCode = ({ close }: Props) => {
             puzzleId: Puzzles.ornamentCode.name,
             answer: Puzzles.ornamentCode.answer,
           });
-        }, 1000);
+        }, 600);
       } else {
         setTimeout(() => {
           setInputCode([]);
+          setHasError(true);
         }, 500);
       }
     }
@@ -62,6 +70,7 @@ export const OrnamentCode = ({ close }: Props) => {
   const handlePadPress = (value: number | undefined) => {
     if (value === undefined) return;
 
+    setHasError(false);
     const newInputCode = [...inputCode, value];
     setInputCode(newInputCode);
   };
@@ -83,8 +92,8 @@ export const OrnamentCode = ({ close }: Props) => {
         <div className="mt-12 flex flex-col items-center">
           <div className="p-8 bg-amber-50 rounded-lg border-2">
             <div className="bg-neutral-600 h-16 rounded-lg border-4 border-white text-white flex items-center justify-center gap-4 text-xl font-bold shadow-[inset_4px_4px_8px_rgba(0,0,0,0.45)]">
-              {inputCode.map((code) => (
-                <p>{code}</p>
+              {hasError ? <p>Error!</p> : inputCode.map((code, index) => (
+                <p className={displayColors[index]}>{code}</p>
               ))}
             </div>
             <div className="grid grid-cols-3 gap-6 mt-6">
