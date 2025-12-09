@@ -11,5 +11,6 @@ export const puzzleConfig = {
     thumbnail:
       "/images/scenes/scene1/puzzles/ornament-code/ornament-code-thumbnail.png",
     background: "",
+    lockedText: `Not yet! There are other puzzles to complete!`,
   },
 };

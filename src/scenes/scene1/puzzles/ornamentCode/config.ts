@@ -23,6 +23,6 @@ export const padConfig = [
 
 export const codeDisplayColors: Record<number, string> = {
   0: "text-yellow-500",
-  1: "text-grey-500",
+  1: "text-green-500",
   2: "text-red-500",
-}
+};

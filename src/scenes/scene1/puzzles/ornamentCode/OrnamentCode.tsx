@@ -64,9 +64,13 @@ export const OrnamentCode = ({ close }: Props) => {
         <div className="mt-12 flex flex-col items-center">
           <div className="p-8 bg-amber-50 rounded-lg border-2">
             <div className="bg-neutral-600 h-16 rounded-lg border-4 border-white text-white flex items-center justify-center gap-4 text-xl font-bold shadow-[inset_4px_4px_8px_rgba(0,0,0,0.45)]">
-              {hasError ? <p>Error!</p> : inputCode.map((code, index) => (
-                <p className={codeDisplayColors[index]}>{code}</p>
-              ))}
+              {hasError ? (
+                <p>Error!</p>
+              ) : (
+                inputCode.map((code, index) => (
+                  <p className={codeDisplayColors[index]}>{code}</p>
+                ))
+              )}
             </div>
             <div className="grid grid-cols-3 gap-6 mt-6">
               {padConfig.map((pad) => (

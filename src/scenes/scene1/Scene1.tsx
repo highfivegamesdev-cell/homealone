@@ -10,6 +10,8 @@ import { PuzzleTrigger } from "@/components/action/Button/PuzzleTrigger";
 import { SceneWrapper } from "@/components/layout/SceneWrapper";
 import { useEffect } from "react";
 import { OrnamentCode } from "./puzzles/ornamentCode/OrnamentCode";
+import { Baubles } from "./Baubles";
+import { CodePad } from "./CodePad";
 
 type Props = {
   puzzles: Puzzle[];
@@ -30,7 +32,12 @@ export const Scene1 = ({ puzzles }: Props) => {
   } = useModal();
 
   const { solvedPuzzles } = state.context;
+  const unlockedCodePad = puzzles
+    .filter((p) => p.id !== Puzzles.ornamentCode.name)
+    .every((p) => solvedPuzzles[p.id]);
   const allPuzzlesSolved = puzzles.every((p) => solvedPuzzles[p.id]);
+
+  console.log(unlockedCodePad);
 
   const background = "/images/scenes/scene1/scene1-background.png";
 
@@ -57,9 +64,11 @@ export const Scene1 = ({ puzzles }: Props) => {
         <PuzzleTrigger
           image={puzzleConfig.ornamentCode.thumbnail}
           alt="Open Ornament Code"
-          className="w-[30px] lg:w-[45px] xl:w-[55px] 2xl:w-[65px] top-[36%] right-[47.5%]"
+          className="w-[70px] lg:w-[90px] xl:w-[110px] 2xl:w-[130px] top-[50%] right-[58%]"
           action={openOrnamentCode}
         />
+
+        <Baubles />
 
         <PuzzleModal isPuzzleOpen={isCookiesOpen} closePuzzle={closeCookies}>
           {solvedPuzzles[Puzzles.cookies.name] ? (
@@ -77,15 +86,11 @@ export const Scene1 = ({ puzzles }: Props) => {
           isPuzzleOpen={isOrnamentCodeOpen}
           closePuzzle={closeOrnamentCode}
         >
-          {solvedPuzzles[Puzzles.ornamentCode.name] ? (
-            <PuzzleCompleted
-              text={puzzleConfig.ornamentCode.summary}
-              image={puzzleConfig.ornamentCode.image}
-              close={closeOrnamentCode}
-            />
-          ) : (
-            <OrnamentCode close={closeOrnamentCode} />
-          )}
+          <CodePad
+            wasSolved={solvedPuzzles[Puzzles.ornamentCode.name]}
+            wasUnlocked={unlockedCodePad}
+            close={closeOrnamentCode}
+          />
         </PuzzleModal>
       </div>
     </SceneWrapper>
