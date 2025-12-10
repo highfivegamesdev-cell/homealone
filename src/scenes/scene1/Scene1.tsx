@@ -9,7 +9,6 @@ import { PuzzleModal } from "@/components/display/Modal/PuzzleModal";
 import { PuzzleTrigger } from "@/components/action/Button/PuzzleTrigger";
 import { SceneWrapper } from "@/components/layout/SceneWrapper";
 import { useEffect } from "react";
-import { OrnamentCode } from "./puzzles/ornamentCode/OrnamentCode";
 import { Baubles } from "./Baubles";
 import { CodePad } from "./CodePad";
 
@@ -36,8 +35,6 @@ export const Scene1 = ({ puzzles }: Props) => {
     .filter((p) => p.id !== Puzzles.ornamentCode.name)
     .every((p) => solvedPuzzles[p.id]);
   const allPuzzlesSolved = puzzles.every((p) => solvedPuzzles[p.id]);
-
-  console.log(unlockedCodePad);
 
   const background = "/images/scenes/scene1/scene1-background.png";
 
