@@ -68,7 +68,7 @@ export const OrnamentCode = ({ close }: Props) => {
                 <p>Error!</p>
               ) : (
                 inputCode.map((code, index) => (
-                  <p className={codeDisplayColors[index]}>{code}</p>
+                  <p className={`orbitron ${codeDisplayColors[index]}`}>{code}</p>
                 ))
               )}
             </div>

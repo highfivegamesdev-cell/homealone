@@ -7,6 +7,17 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Orbitron";
+  src: url("/fonts/orbitron.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 html {
   font-family: "Castellar-Regular", sans-serif;
+}
+
+.orbitron {
+  font-family: "Orbitron", sans-serif;
 }
