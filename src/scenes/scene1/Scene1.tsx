@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { Baubles } from "./Baubles";
 import { CodePad } from "./puzzles/ornamentCode/CodePad";
 import { StockingGame } from "./puzzles/stocking/StockingGame";
+import { Lyrics } from "./puzzles/lyrics/Lyrics";
 
 type Props = {
   puzzles: Puzzle[];
@@ -29,6 +30,12 @@ export const Scene1 = ({ puzzles }: Props) => {
     isModalOpen: isOrnamentCodeOpen,
     openModal: openOrnamentCode,
     closeModal: closeOrnamentCode,
+  } = useModal();
+
+  const {
+    isModalOpen: areLyricsOpen,
+    openModal: openLyrics,
+    closeModal: closeLyrics,
   } = useModal();
 
   const {
@@ -73,6 +80,13 @@ export const Scene1 = ({ puzzles }: Props) => {
         />
 
         <PuzzleTrigger
+          image={puzzleConfig.lyrics.thumbnail}
+          alt="Open Lyrics"
+          className="w-[70px] lg:w-[80px] xl:w-[100px] 2xl:w-[120px] top-[66%] right-[46%]"
+          action={openLyrics}
+        />
+
+        <PuzzleTrigger
           image={puzzleConfig.stocking.thumbnail}
           alt="Open Stocking Game"
           className="w-[70px] lg:w-[90px] xl:w-[110px] 2xl:w-[130px] top-[30%] right-[7%]"
@@ -102,6 +116,10 @@ export const Scene1 = ({ puzzles }: Props) => {
             wasUnlocked={unlockedCodePad}
             close={closeOrnamentCode}
           />
+        </PuzzleModal>
+
+        <PuzzleModal isPuzzleOpen={areLyricsOpen} closePuzzle={closeLyrics}>
+          <Lyrics close={closeLyrics} />
         </PuzzleModal>
 
         <PuzzleModal isPuzzleOpen={isStockingOpen} closePuzzle={closeStocking}>
