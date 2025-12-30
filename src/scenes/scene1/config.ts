@@ -13,4 +13,10 @@ export const puzzleConfig = {
     background: "",
     lockedText: `Not yet! There are other puzzles to complete!`,
   },
+  stocking: {
+    summary: `The puzzle is complete!`,
+    background:
+      "/images/scenes/scene1/puzzles/stocking/stocking-background.png",
+    thumbnail: "/images/scenes/scene1/puzzles/stocking/stocking-thumbnail.png",
+  },
 };

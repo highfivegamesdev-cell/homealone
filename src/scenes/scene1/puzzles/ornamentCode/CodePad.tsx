@@ -1,5 +1,5 @@
 import { puzzleConfig } from "@/scenes/scene1/config";
-import { OrnamentCode } from "./puzzles/ornamentCode/OrnamentCode";
+import { OrnamentCode } from "./OrnamentCode";
 import { PuzzleCompleted } from "@/components/display/PuzzleCompleted/PuzzleCompleted";
 
 type Props = {

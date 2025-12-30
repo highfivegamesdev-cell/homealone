@@ -10,7 +10,8 @@ import { PuzzleTrigger } from "@/components/action/Button/PuzzleTrigger";
 import { SceneWrapper } from "@/components/layout/SceneWrapper";
 import { useEffect } from "react";
 import { Baubles } from "./Baubles";
-import { CodePad } from "./CodePad";
+import { CodePad } from "./puzzles/ornamentCode/CodePad";
+import { StockingGame } from "./puzzles/stocking/StockingGame";
 
 type Props = {
   puzzles: Puzzle[];
@@ -28,6 +29,12 @@ export const Scene1 = ({ puzzles }: Props) => {
     isModalOpen: isOrnamentCodeOpen,
     openModal: openOrnamentCode,
     closeModal: closeOrnamentCode,
+  } = useModal();
+
+  const {
+    isModalOpen: isStockingOpen,
+    openModal: openStocking,
+    closeModal: closeStocking,
   } = useModal();
 
   const { solvedPuzzles } = state.context;
@@ -65,6 +72,13 @@ export const Scene1 = ({ puzzles }: Props) => {
           action={openOrnamentCode}
         />
 
+        <PuzzleTrigger
+          image={puzzleConfig.stocking.thumbnail}
+          alt="Open Stocking Game"
+          className="w-[70px] lg:w-[90px] xl:w-[110px] 2xl:w-[130px] top-[30%] right-[7%]"
+          action={openStocking}
+        />
+
         <Baubles />
 
         <PuzzleModal isPuzzleOpen={isCookiesOpen} closePuzzle={closeCookies}>
@@ -88,6 +102,17 @@ export const Scene1 = ({ puzzles }: Props) => {
             wasUnlocked={unlockedCodePad}
             close={closeOrnamentCode}
           />
+        </PuzzleModal>
+
+        <PuzzleModal isPuzzleOpen={isStockingOpen} closePuzzle={closeStocking}>
+          {solvedPuzzles[Puzzles.stocking.name] ? (
+            <PuzzleCompleted
+              text={puzzleConfig.stocking.summary}
+              close={closeStocking}
+            />
+          ) : (
+            <StockingGame close={closeStocking} />
+          )}
         </PuzzleModal>
       </div>
     </SceneWrapper>
