@@ -13,6 +13,7 @@ import { Baubles } from "./Baubles";
 import { CodePad } from "./puzzles/ornamentCode/CodePad";
 import { StockingGame } from "./puzzles/stocking/StockingGame";
 import { Lyrics } from "./puzzles/lyrics/Lyrics";
+import { InventoryItems } from "./InventoryItems";
 
 type Props = {
   puzzles: Puzzle[];
@@ -44,7 +45,7 @@ export const Scene1 = ({ puzzles }: Props) => {
     closeModal: closeStocking,
   } = useModal();
 
-  const { solvedPuzzles } = state.context;
+  const { solvedPuzzles, inventory } = state.context;
   const unlockedCodePad = puzzles
     .filter((p) => p.id !== Puzzles.ornamentCode.name)
     .every((p) => solvedPuzzles[p.id]);
@@ -61,6 +62,8 @@ export const Scene1 = ({ puzzles }: Props) => {
       return () => clearTimeout(timer);
     }
   }, [allPuzzlesSolved, send]);
+
+  console.log("Inventory Items:", inventory);
 
   return (
     <SceneWrapper backgroundUrl={background}>
@@ -94,6 +97,8 @@ export const Scene1 = ({ puzzles }: Props) => {
         />
 
         <Baubles />
+
+        <InventoryItems />
 
         <PuzzleModal isPuzzleOpen={isCookiesOpen} closePuzzle={closeCookies}>
           {solvedPuzzles[Puzzles.cookies.name] ? (

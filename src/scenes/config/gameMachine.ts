@@ -6,11 +6,13 @@ import type { SceneConfig } from "@/scenes/config/scenesConfig";
 export type GameContext = {
   solvedPuzzles: Record<string, boolean>;
   currentScene: string;
+  inventory: string[];
 };
 
 export const GameEventTypes = {
   solvePuzzle: "SOLVE_PUZZLE",
   next: "NEXT",
+  addItemToInventory: "ADD_ITEM_TO_INVENTORY",
 } as const;
 
 export type GameEvent =
@@ -47,6 +49,16 @@ const buildScenesStates = (room: SceneConfig) => {
             return context;
           }),
         },
+        ADD_ITEM_TO_INVENTORY: {
+          actions: assign(({ context, event }) => {
+            if (event.type !== GameEventTypes.addItemToInventory)
+              return context;
+            return {
+              ...context,
+              inventory: [...context.inventory, event.itemId],
+            };
+          }),
+        },
         NEXT: {
           target: room.next ?? "exit",
           guard: ({ context }: { context: GameContext }) =>
@@ -54,6 +66,7 @@ const buildScenesStates = (room: SceneConfig) => {
           actions: assign(({ context }) => ({
             ...context,
             currentScene: room.next ?? "exit",
+            inventory: [],
           })),
         },
       },
@@ -78,6 +91,7 @@ export const createGameMachine = () => {
     context: {
       solvedPuzzles: {},
       currentScene: scenesConfig[0].id,
+      inventory: [],
     },
     states,
   });
