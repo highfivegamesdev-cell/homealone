@@ -24,12 +24,6 @@ const items: InventoryItem[] = [
       "w-[50px] lg:w-[60px] xl:w-[70px] 2xl:w-[80px] top-[83%] right-[77%]",
   },
   {
-    id: "picture-frame",
-    fileName: "item-picture-frame",
-    className:
-      "w-[50px] lg:w-[60px] xl:w-[70px] 2xl:w-[80px] top-[40%] right-[87%]",
-  },
-  {
     id: "pyramid",
     fileName: "item-pyramid",
     className:

@@ -11,9 +11,9 @@ import {
   closestCenter,
   DragOverlay,
 } from "@dnd-kit/core";
-import { Shape } from "./Shape";
 import { stockingsConfig } from "./config";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import { Shape } from "@/components/action/dragAndDrop/Shape";
 
 type Props = {
   close: () => void;

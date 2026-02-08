@@ -14,6 +14,7 @@ import { CodePad } from "./puzzles/ornamentCode/CodePad";
 import { StockingGame } from "./puzzles/stocking/StockingGame";
 import { Lyrics } from "./puzzles/lyrics/Lyrics";
 import { InventoryItems } from "./InventoryItems";
+import { ShadowGame } from "./puzzles/shadow/ShadowGame";
 
 type Props = {
   puzzles: Puzzle[];
@@ -43,6 +44,12 @@ export const Scene1 = ({ puzzles }: Props) => {
     isModalOpen: isStockingOpen,
     openModal: openStocking,
     closeModal: closeStocking,
+  } = useModal();
+
+    const {
+    isModalOpen: isShadowOpen,
+    openModal: openShadow,
+    closeModal: closeShadow,
   } = useModal();
 
   const { solvedPuzzles, inventory } = state.context;
@@ -96,6 +103,13 @@ export const Scene1 = ({ puzzles }: Props) => {
           action={openStocking}
         />
 
+                <PuzzleTrigger
+          image={puzzleConfig.shadow.thumbnail}
+          alt="Open Shadow Game"
+          className="w-[50px] lg:w-[60px] xl:w-[70px] 2xl:w-[80px] top-[40%] right-[87%]"
+          action={openShadow}
+        />
+
         <Baubles />
 
         <InventoryItems />
@@ -135,6 +149,17 @@ export const Scene1 = ({ puzzles }: Props) => {
             />
           ) : (
             <StockingGame close={closeStocking} />
+          )}
+        </PuzzleModal>
+
+                <PuzzleModal isPuzzleOpen={isShadowOpen} closePuzzle={closeShadow}>
+          {solvedPuzzles[Puzzles.shadow.name] ? (
+            <PuzzleCompleted
+              text={puzzleConfig.shadow.summary}
+              close={closeShadow}
+            />
+          ) : (
+            <ShadowGame close={closeShadow} />
           )}
         </PuzzleModal>
       </div>
