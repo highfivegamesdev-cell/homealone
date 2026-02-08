@@ -24,4 +24,10 @@ export const puzzleConfig = {
       "/images/scenes/scene1/puzzles/stocking/stocking-background.png",
     thumbnail: "/images/scenes/scene1/puzzles/stocking/stocking-thumbnail.png",
   },
+    shadow: {
+    summary: `The puzzle is complete!`,
+    background: "",
+    thumbnail: "/images/scenes/scene1/puzzles/shadow/shadow-thumbnail.png",
+    shapeDrop: `/images/scenes/scene1/puzzles/shadow/shape-drop-zone.jpeg`,
+  },
 };

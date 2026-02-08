@@ -31,7 +31,6 @@ export const Cookies = ({ close }: Props) => {
   const cookie4 = watch("cookie4");
 
   useEffect(() => {
-    console.log(cookie1, cookie2, cookie3, cookie4);
     const isSolved =
       cookie1?.toLowerCase() === "t" &&
       cookie2?.toLowerCase() === "r" &&

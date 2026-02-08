@@ -23,6 +23,10 @@ export const Puzzles = {
     name: "stocking",
     answer: "STOCKING_SOLVED",
   },
+  shadow: {
+    name: "shadow",
+    answer: "SHADOW_SOLVED",
+  }
 } as const;
 
 export const scenesConfig: SceneConfig[] = [
@@ -32,6 +36,7 @@ export const scenesConfig: SceneConfig[] = [
       { id: Puzzles.cookies.name, answer: Puzzles.cookies.answer },
       { id: Puzzles.ornamentCode.name, answer: Puzzles.ornamentCode.answer },
       { id: Puzzles.stocking.name, answer: Puzzles.stocking.answer },
+      { id: Puzzles.shadow.name, answer: Puzzles.shadow.answer },
     ],
     next: "scene2",
   },
