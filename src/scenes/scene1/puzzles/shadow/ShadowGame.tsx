@@ -3,17 +3,19 @@ import {
   DndContext,
   type DragEndEvent,
   type DragStartEvent,
-  closestCenter,
+  pointerWithin,
   DragOverlay,
+  useSensors,
+  useSensor,
+  PointerSensor,
 } from "@dnd-kit/core";
 import { PuzzleWrapper } from "@/components/layout/PuzzleWrapper";
 import { Puzzles } from "@/scenes/config/scenesConfig";
 import { GameEventTypes } from "@/scenes/config/gameMachine";
 import { useGame } from "@/scenes/config/useGame";
 import { puzzleConfig } from "@/scenes/scene1/config";
-import { Shape } from "@/components/action/dragAndDrop/Shape";
-import { ShapeDrop } from "@/components/action/dragAndDrop/ShapeDrop";
-import { SortableContext } from "@dnd-kit/sortable";
+import { DraggableImg } from "@/components/action/dragAndDrop/DraggableImg";
+import { DroppableDiv } from "@/components/action/dragAndDrop/DroppableDiv";
 
 type Props = {
   close: () => void;
@@ -27,6 +29,10 @@ export const ShadowGame = ({ close }: Props) => {
   const [pool, setPool] = useState(state.context.inventory);
   const [activeId, setActiveId] = useState<string | null>(null);
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 4 } })
+  );
+
   const handleDragStart = (event: DragStartEvent) => {
     setActiveId(event.active.id as string);
   };
@@ -36,11 +42,10 @@ export const ShadowGame = ({ close }: Props) => {
     const item = active.id as string;
     setActiveId(null);
 
-    if (!over) {
-      return;
-    }
+    if (!over) return;
 
-    if (item === correctAnswer) {
+    if (over.id === `slot-${correctAnswer}` && item === correctAnswer) {
+      setPool((prev) => prev.filter((i) => i !== item));
       send({
         type: GameEventTypes.solvePuzzle,
         puzzleId: Puzzles.shadow.name,
@@ -48,8 +53,6 @@ export const ShadowGame = ({ close }: Props) => {
       });
     }
   };
-
-  console.log("ShadowGame state:", state.context.inventory);
 
   return (
     <PuzzleWrapper backgroundUrl={puzzleConfig.shadow.background}>
@@ -61,54 +64,41 @@ export const ShadowGame = ({ close }: Props) => {
       </button>
       <div className="p-4 w-[70%] mx-auto text-center">
         <DndContext
-          collisionDetection={closestCenter}
+          sensors={sensors}
+          collisionDetection={pointerWithin}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
         >
-          <div className="absolute top-[20%] left-1/2 -translate-x-1/2 flex flex-row gap-4 items-center justify-center">
-            <ShapeDrop id={`slot-${correctAnswer}`}>
-              <Shape
-                key={correctAnswer}
-                id={correctAnswer}
-                backgroundUrl={puzzleConfig.shadow.shapeDrop}
-              />
-            </ShapeDrop>
+          <div className="flex justify-center gap-4 items-center mb-12">
+            <div className="max-w-[50%] relative">
+              <img src={puzzleConfig.shadow.shapeDrop} alt="Shape Drop" className="z-1" />
+              <DroppableDiv id={`slot-${correctAnswer}`} className="bg-transparent w-[60px] lg:w-[80px] xl:w-[100px] h-[60px] lg:h-[80px] xl:h-[100px] absolute top-[56%] left-[45%] z-10" />
+            </div>
           </div>
 
-          <div
-            id="pool"
-            className="flex flex-wrap gap-2 min-w-[180px] min-h-[120px] p-4 border-2 border-gray-300 rounded-lg mb-6 empty:invisible"
-          >
-            <SortableContext items={pool}>
-              {pool.map((id) => {
-                return (
-                  <Shape
-                    key={id}
-                    id={id}
-                    backgroundUrl={`/images/scenes/scene1/puzzles/shadow/item-${id}.png`}
-                  />
-                );
-              })}
-            </SortableContext>
+          <div id="pool" className="flex justify-center gap-6">
+            {pool.map((id) => (
+              <DraggableImg
+                key={id}
+                id={id}
+                src={`/images/scenes/scene1/puzzles/shadow/item-${id}.png`}
+                alt={`Item ${id}`}
+                className="w-10 lg:w-[70px] xl:w-[70px] 2xl:w-[70px] cursor-grab select-none"
+              />
+            ))}
           </div>
 
           <DragOverlay>
-            {activeId
-              ? (() => {
-                return (
-                  <div className="relative z-50">
-                    <Shape
-                      id={activeId}
-                      backgroundUrl={`/images/scenes/scene1/puzzles/shadow/item-${activeId}.png`}
-                    />
-                    <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] rounded-md pointer-events-none" />
-                  </div>
-                );
-              })()
-              : null}
+            {activeId ? (
+              <img
+                src={`/images/scenes/scene1/puzzles/shadow/item-${activeId}.png`}
+                alt={activeId}
+                className="w-10 lg:w-[70px] xl:w-[70px] 2xl:w-[70px] opacity-75"
+              />
+            ) : null}
           </DragOverlay>
         </DndContext>
-      </div>
-    </PuzzleWrapper>
+      </div >
+    </PuzzleWrapper >
   );
 };

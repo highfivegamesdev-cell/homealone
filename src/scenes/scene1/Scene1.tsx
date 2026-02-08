@@ -46,13 +46,13 @@ export const Scene1 = ({ puzzles }: Props) => {
     closeModal: closeStocking,
   } = useModal();
 
-    const {
+  const {
     isModalOpen: isShadowOpen,
     openModal: openShadow,
     closeModal: closeShadow,
   } = useModal();
 
-  const { solvedPuzzles, inventory } = state.context;
+  const { solvedPuzzles } = state.context;
   const unlockedCodePad = puzzles
     .filter((p) => p.id !== Puzzles.ornamentCode.name)
     .every((p) => solvedPuzzles[p.id]);
@@ -64,13 +64,11 @@ export const Scene1 = ({ puzzles }: Props) => {
     if (allPuzzlesSolved) {
       const timer = setTimeout(() => {
         send({ type: "NEXT" });
-      }, 5000);
+      }, 2000);
 
       return () => clearTimeout(timer);
     }
   }, [allPuzzlesSolved, send]);
-
-  console.log("Inventory Items:", inventory);
 
   return (
     <SceneWrapper backgroundUrl={background}>
@@ -103,7 +101,7 @@ export const Scene1 = ({ puzzles }: Props) => {
           action={openStocking}
         />
 
-                <PuzzleTrigger
+        <PuzzleTrigger
           image={puzzleConfig.shadow.thumbnail}
           alt="Open Shadow Game"
           className="w-[50px] lg:w-[60px] xl:w-[70px] 2xl:w-[80px] top-[40%] right-[87%]"
@@ -152,7 +150,7 @@ export const Scene1 = ({ puzzles }: Props) => {
           )}
         </PuzzleModal>
 
-                <PuzzleModal isPuzzleOpen={isShadowOpen} closePuzzle={closeShadow}>
+        <PuzzleModal isPuzzleOpen={isShadowOpen} closePuzzle={closeShadow}>
           {solvedPuzzles[Puzzles.shadow.name] ? (
             <PuzzleCompleted
               text={puzzleConfig.shadow.summary}
