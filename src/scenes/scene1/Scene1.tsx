@@ -15,13 +15,16 @@ import { StockingGame } from "./puzzles/stocking/StockingGame";
 import { Lyrics } from "./puzzles/lyrics/Lyrics";
 import { InventoryItems } from "./InventoryItems";
 import { ShadowGame } from "./puzzles/shadow/ShadowGame";
+import { routes } from "@/router/routes";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   puzzles: Puzzle[];
 };
 
 export const Scene1 = ({ puzzles }: Props) => {
-  const { state, send } = useGame();
+  const { state } = useGame();
+  const navigate = useNavigate();
   const {
     isModalOpen: isCookiesOpen,
     openModal: openCookies,
@@ -63,12 +66,12 @@ export const Scene1 = ({ puzzles }: Props) => {
   useEffect(() => {
     if (allPuzzlesSolved) {
       const timer = setTimeout(() => {
-        send({ type: "NEXT" });
+        navigate(routes.scene2);
       }, 2000);
 
       return () => clearTimeout(timer);
     }
-  }, [allPuzzlesSolved, send]);
+  }, [allPuzzlesSolved, navigate]);
 
   return (
     <SceneWrapper backgroundUrl={background}>

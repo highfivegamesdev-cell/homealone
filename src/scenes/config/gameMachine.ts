@@ -1,17 +1,14 @@
 import { createMachine, assign } from "xstate";
 
 import { scenesConfig } from "@/scenes/config/scenesConfig";
-import type { SceneConfig } from "@/scenes/config/scenesConfig";
 
 export type GameContext = {
   solvedPuzzles: Record<string, boolean>;
-  currentScene: string;
   inventory: string[];
 };
 
 export const GameEventTypes = {
   solvePuzzle: "SOLVE_PUZZLE",
-  next: "NEXT",
   addItemToInventory: "ADD_ITEM_TO_INVENTORY",
 } as const;
 
@@ -21,22 +18,35 @@ export type GameEvent =
       puzzleId: string;
       answer?: string;
     }
-  | { type: typeof GameEventTypes.next };
+  | {
+      type: typeof GameEventTypes.addItemToInventory;
+      itemId: string;
+    };
 
-const buildScenesStates = (room: SceneConfig) => {
-  return {
-    [room.id]: {
-      on: {
-        SOLVE_PUZZLE: {
-          actions: assign(({ context, event }) => {
-            if (event.type !== GameEventTypes.solvePuzzle) return context;
+export const createGameMachine = () => {
+  return createMachine({
+    id: "game",
+    initial: "playing",
+    types: {} as {
+      context: GameContext;
+    },
+    context: {
+      solvedPuzzles: {},
+      inventory: [],
+    },
+    states: {
+      playing: {
+        on: {
+          SOLVE_PUZZLE: {
+            actions: assign(({ context, event }) => {
+              if (event.type !== GameEventTypes.solvePuzzle) return context;
 
-            const puzzle = room.puzzles.find(
-              (puzzle) => puzzle.id === event.puzzleId,
-            );
-            if (!puzzle) return context;
+              const puzzle = scenesConfig
+                .flatMap((scene) => scene.puzzles)
+                .find((entry) => entry.id === event.puzzleId);
 
-            if (event.answer === puzzle.answer) {
+              if (!puzzle || event.answer !== puzzle.answer) return context;
+
               return {
                 ...context,
                 solvedPuzzles: {
@@ -44,55 +54,20 @@ const buildScenesStates = (room: SceneConfig) => {
                   [puzzle.id]: true,
                 },
               };
-            }
-
-            return context;
-          }),
-        },
-        ADD_ITEM_TO_INVENTORY: {
-          actions: assign(({ context, event }) => {
-            if (event.type !== GameEventTypes.addItemToInventory)
-              return context;
-            return {
-              ...context,
-              inventory: [...context.inventory, event.itemId],
-            };
-          }),
-        },
-        NEXT: {
-          target: room.next ?? "exit",
-          guard: ({ context }: { context: GameContext }) =>
-            room.puzzles.every((puzzle) => context.solvedPuzzles[puzzle.id]),
-          actions: assign(({ context }) => ({
-            ...context,
-            currentScene: room.next ?? "exit",
-            inventory: [],
-          })),
+            }),
+          },
+          ADD_ITEM_TO_INVENTORY: {
+            actions: assign(({ context, event }) => {
+              if (event.type !== GameEventTypes.addItemToInventory)
+                return context;
+              return {
+                ...context,
+                inventory: [...context.inventory, event.itemId],
+              };
+            }),
+          },
         },
       },
     },
-  };
-};
-
-export const createGameMachine = () => {
-  const states: Record<string, any> = {};
-  scenesConfig.forEach((scene) =>
-    Object.assign(states, buildScenesStates(scene)),
-  );
-
-  states["exit"] = { type: "final" };
-
-  return createMachine({
-    id: "game",
-    initial: scenesConfig[0].id,
-    types: {} as {
-      context: GameContext;
-    },
-    context: {
-      solvedPuzzles: {},
-      currentScene: scenesConfig[0].id,
-      inventory: [],
-    },
-    states,
   });
 };
