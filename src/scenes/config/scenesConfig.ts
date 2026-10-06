@@ -26,7 +26,11 @@ export const Puzzles = {
   shadow: {
     name: "shadow",
     answer: "SHADOW_SOLVED",
-  }
+  },
+  houseJigsaw: {
+    name: "houseJigsaw",
+    answer: "HOUSE_JIGSAW_SOLVED",
+  },
 } as const;
 
 export const scenesConfig: SceneConfig[] = [
@@ -42,7 +46,7 @@ export const scenesConfig: SceneConfig[] = [
   },
   {
     id: "scene2",
-    puzzles: [{ id: Puzzles.cookies.name, answer: Puzzles.cookies.answer }],
+    puzzles: [{ id: Puzzles.houseJigsaw.name, answer: Puzzles.houseJigsaw.answer }],
     next: "exit",
   },
 ];
