@@ -1,4 +1,7 @@
 import type { Puzzle } from "@/scenes/config/scenesConfig";
+import { useGame } from "@/scenes/config/useGame";
+import { PuzzleCompleted } from "@/components/display/PuzzleCompleted/PuzzleCompleted";
+import { Puzzles } from "@/scenes/config/scenesConfig";
 import { SceneWrapper } from "@/components/layout/SceneWrapper";
 import { PuzzleModal } from "@/components/display/Modal/PuzzleModal";
 import { PuzzleTrigger } from "@/components/action/Button/PuzzleTrigger";
@@ -13,11 +16,14 @@ type Props = {
 export const Scene2 = ({ puzzles }: Props) => {
   void puzzles;
 
+  const { state } = useGame();
   const {
     isModalOpen: isHouseJigsawOpen,
     openModal: openHouseJigsaw,
     closeModal: closeHouseJigsaw,
   } = useModal();
+  const isHouseJigsawSolved =
+    state.context.solvedPuzzles[Puzzles.houseJigsaw.name];
   const background = "/images/scenes/scene2/scene2-background.png";
 
   return (
@@ -34,7 +40,16 @@ export const Scene2 = ({ puzzles }: Props) => {
           isPuzzleOpen={isHouseJigsawOpen}
           closePuzzle={closeHouseJigsaw}
         >
-          <HouseJigsaw close={closeHouseJigsaw} />
+          {isHouseJigsawSolved ? (
+            <PuzzleCompleted
+              message={puzzleConfig.houseJigsaw.summary}
+              image={puzzleConfig.houseJigsaw.image}
+              details={puzzleConfig.houseJigsaw.details}
+              close={closeHouseJigsaw}
+            />
+          ) : (
+            <HouseJigsaw close={closeHouseJigsaw} />
+          )}
         </PuzzleModal>
       </div>
     </SceneWrapper>

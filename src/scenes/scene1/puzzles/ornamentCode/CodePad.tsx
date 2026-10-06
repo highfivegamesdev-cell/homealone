@@ -12,7 +12,7 @@ export const CodePad = ({ wasSolved, wasUnlocked, close }: Props) => {
   if (wasSolved) {
     return (
       <PuzzleCompleted
-        text={puzzleConfig.ornamentCode.summary}
+        message={puzzleConfig.ornamentCode.summary}
         image={puzzleConfig.ornamentCode.image}
         close={close}
       />
@@ -22,7 +22,7 @@ export const CodePad = ({ wasSolved, wasUnlocked, close }: Props) => {
   if (!wasUnlocked) {
     return (
       <PuzzleCompleted
-        text={puzzleConfig.ornamentCode.lockedText}
+        message={puzzleConfig.ornamentCode.lockedText}
         image=""
         close={close}
       />

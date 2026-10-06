@@ -118,7 +118,7 @@ export const Scene1 = ({ puzzles }: Props) => {
         <PuzzleModal isPuzzleOpen={isCookiesOpen} closePuzzle={closeCookies}>
           {solvedPuzzles[Puzzles.cookies.name] ? (
             <PuzzleCompleted
-              text={puzzleConfig.cookies.summary}
+              message={puzzleConfig.cookies.summary}
               image={puzzleConfig.cookies.image}
               close={closeCookies}
             />
@@ -145,7 +145,7 @@ export const Scene1 = ({ puzzles }: Props) => {
         <PuzzleModal isPuzzleOpen={isStockingOpen} closePuzzle={closeStocking}>
           {solvedPuzzles[Puzzles.stocking.name] ? (
             <PuzzleCompleted
-              text={puzzleConfig.stocking.summary}
+              message={puzzleConfig.stocking.summary}
               close={closeStocking}
             />
           ) : (
@@ -156,7 +156,7 @@ export const Scene1 = ({ puzzles }: Props) => {
         <PuzzleModal isPuzzleOpen={isShadowOpen} closePuzzle={closeShadow}>
           {solvedPuzzles[Puzzles.shadow.name] ? (
             <PuzzleCompleted
-              text={puzzleConfig.shadow.summary}
+              message={puzzleConfig.shadow.summary}
               close={closeShadow}
             />
           ) : (
