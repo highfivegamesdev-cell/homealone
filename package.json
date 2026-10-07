@@ -15,6 +15,8 @@
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
     "@xstate/react": "^6.0.0",
+    "headbreaker": "^3.0.0",
+    "konva": "^10.7.1",
     "lucide-react": "^0.562.0",
     "prettier": "^3.6.2",
     "react": "^19.1.1",

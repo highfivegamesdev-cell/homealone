@@ -1,12 +1,13 @@
 import { PuzzleCompletedWrapper } from "@/components/layout/PuzzleCompletedWrapper";
 
 type Props = {
-  text: string;
+  message?: string;
   image?: string;
+  details?: string[];
   close: () => void;
 };
 
-export const PuzzleCompleted = ({ text, image, close }: Props) => {
+export const PuzzleCompleted = ({ message, image, details, close }: Props) => {
   return (
     <PuzzleCompletedWrapper smallSize={!image}>
       <button
@@ -26,7 +27,19 @@ export const PuzzleCompleted = ({ text, image, close }: Props) => {
         ) : (
           <div />
         )}
-        <p className="font-bold">{text}</p>
+        {message && <p className="font-bold">{message}</p>}
+        {details && details.length > 0 && (
+          <div className="flex flex-col items-center gap-3">
+            {details.map((detail, index) => (
+              <p
+                key={`${detail}-${index}`}
+                className="font-semibold text-2xl tracking-wide"
+              >
+                {detail}
+              </p>
+            ))}
+          </div>
+        )}
         <button
           className="bg-blue-700 text-white font-bold px-4 py-2 mt-2 rounded hover:bg-blue-800 transition hover:cursor-pointer"
           onClick={close}

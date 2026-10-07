@@ -1,8 +1,11 @@
 export const puzzleConfig = {
-  sudoku: {
-    summary: `An Icon Appears! We’re one step closer to Atlantis’ treasure!`,
+  houseJigsaw: {
+    summary: "The puzzle is complete!",
+    details: ["60093", "ypHap"],
     image: "",
-    thumbnail: "",
+    thumbnail:
+      "/images/scenes/scene2/scenes/houseJigsaw/houseJigsaw-thumbnail.png",
     background: "",
+    puzzle: "/images/scenes/scene2/scenes/houseJigsaw/houseJigsaw-puzzle.png",
   },
 };
