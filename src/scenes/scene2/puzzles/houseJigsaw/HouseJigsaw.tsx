@@ -12,7 +12,7 @@ export const HouseJigsaw = ({ close }: Props) => {
       <button
         onClick={close}
         aria-label="Close puzzle"
-        className="absolute top-[1%] right-[3%] z-10 text-white text-4xl font-bold hover:cursor-pointer"
+        className="absolute top-[1%] right-[3%] z-10 text-black text-4xl font-bold hover:cursor-pointer"
       >
         ×
       </button>
