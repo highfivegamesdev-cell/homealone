@@ -1,7 +1,7 @@
 export const puzzleConfig = {
   houseJigsaw: {
     summary: "The puzzle is complete!",
-    details: ["60093", "ypHap"],
+    details: ["60093", "yapHp"],
     image: "",
     thumbnail:
       "/images/scenes/scene2/scenes/houseJigsaw/houseJigsaw-thumbnail.png",
