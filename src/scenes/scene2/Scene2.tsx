@@ -8,7 +8,6 @@ import { PuzzleTrigger } from "@/components/action/Button/PuzzleTrigger";
 import { useModal } from "@/lib/hooks/useModal";
 import { puzzleConfig } from "./config";
 import { HouseJigsaw } from "./puzzles/houseJigsaw/HouseJigsaw";
-import { FindDifferences } from "./puzzles/findDifferences/FindDifferences";
 
 type Props = {
   puzzles: Puzzle[];
@@ -23,15 +22,8 @@ export const Scene2 = ({ puzzles }: Props) => {
     openModal: openHouseJigsaw,
     closeModal: closeHouseJigsaw,
   } = useModal();
-  const {
-    isModalOpen: isFindDifferencesOpen,
-    openModal: openFindDifferences,
-    closeModal: closeFindDifferences,
-  } = useModal();
   const isHouseJigsawSolved =
     state.context.solvedPuzzles[Puzzles.houseJigsaw.name];
-  const isFindDifferencesSolved =
-    state.context.solvedPuzzles[Puzzles.findDifferences.name];
   const background = "/images/scenes/scene2/scene2-background.png";
 
   return (
@@ -42,13 +34,6 @@ export const Scene2 = ({ puzzles }: Props) => {
           alt="Open House Jigsaw"
           className="w-[90px] lg:w-[110px] xl:w-[130px] 2xl:w-[150px] top-[80%] left-[13%]"
           action={openHouseJigsaw}
-        />
-
-        <PuzzleTrigger
-          image={puzzleConfig.findDifferences.thumbnail}
-          alt="Open Find the Differences"
-          className="absolute left-[39%] top-[34%] w-[90px] lg:w-[110px] xl:w-[130px] 2xl:w-[150px]"
-          action={openFindDifferences}
         />
 
         <PuzzleModal
@@ -64,21 +49,6 @@ export const Scene2 = ({ puzzles }: Props) => {
             />
           ) : (
             <HouseJigsaw close={closeHouseJigsaw} />
-          )}
-        </PuzzleModal>
-
-        <PuzzleModal
-          isPuzzleOpen={isFindDifferencesOpen}
-          closePuzzle={closeFindDifferences}
-        >
-          {isFindDifferencesSolved ? (
-            <PuzzleCompleted
-              message={puzzleConfig.findDifferences.summary}
-              details={puzzleConfig.findDifferences.details}
-              close={closeFindDifferences}
-            />
-          ) : (
-            <FindDifferences close={closeFindDifferences} />
           )}
         </PuzzleModal>
       </div>

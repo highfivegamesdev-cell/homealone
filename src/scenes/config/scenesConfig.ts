@@ -31,10 +31,6 @@ export const Puzzles = {
     name: "houseJigsaw",
     answer: "HOUSE_JIGSAW_SOLVED",
   },
-  findDifferences: {
-    name: "findDifferences",
-    answer: "FIND_DIFFERENCES_SOLVED",
-  },
 } as const;
 
 export const scenesConfig: SceneConfig[] = [
@@ -50,13 +46,7 @@ export const scenesConfig: SceneConfig[] = [
   },
   {
     id: "scene2",
-    puzzles: [
-      { id: Puzzles.houseJigsaw.name, answer: Puzzles.houseJigsaw.answer },
-      {
-        id: Puzzles.findDifferences.name,
-        answer: Puzzles.findDifferences.answer,
-      },
-    ],
+    puzzles: [{ id: Puzzles.houseJigsaw.name, answer: Puzzles.houseJigsaw.answer }],
     next: "exit",
   },
 ];
