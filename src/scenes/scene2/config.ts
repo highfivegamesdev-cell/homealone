@@ -19,4 +19,11 @@ export const puzzleConfig = {
     puzzle2:
       "/images/scenes/scene2/puzzles/findDifferences/findDifferences-puzzle2.png",
   },
+  phone: {
+    summary: "The puzzle is complete!",
+    details: ["1990"],
+    code: "67060093",
+    thumbnail: "/images/scenes/scene2/puzzles/phone/phone-thumbnail.png",
+    puzzle: "/images/scenes/scene2/puzzles/phone/phone-puzzle.png",
+  },
 };

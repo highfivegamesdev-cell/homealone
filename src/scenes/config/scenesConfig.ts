@@ -35,6 +35,10 @@ export const Puzzles = {
     name: "findDifferences",
     answer: "FIND_DIFFERENCES_SOLVED",
   },
+  phone: {
+    name: "phone",
+    answer: "PHONE_SOLVED",
+  },
 } as const;
 
 export const scenesConfig: SceneConfig[] = [
@@ -56,6 +60,7 @@ export const scenesConfig: SceneConfig[] = [
         id: Puzzles.findDifferences.name,
         answer: Puzzles.findDifferences.answer,
       },
+      { id: Puzzles.phone.name, answer: Puzzles.phone.answer },
     ],
     next: "exit",
   },
