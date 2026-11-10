@@ -27,4 +27,10 @@ export const puzzleConfig = {
     thumbnail: "/images/scenes/scene2/puzzles/phone/phone-thumbnail.png",
     puzzle: "/images/scenes/scene2/puzzles/phone/phone-puzzle.png",
   },
+  securityPanel: {
+    summary: "The puzzle is complete!",
+    thumbnail: "/images/scenes/scene2/puzzles/securityPanel/securityPanel-thumbnail.png",
+    closed: "/images/scenes/scene2/puzzles/securityPanel/securityPanel-closed.png",
+    opened: "/images/scenes/scene2/puzzles/securityPanel/securityPanel-opened.png",
+  }
 };

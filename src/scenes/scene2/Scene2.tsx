@@ -10,6 +10,7 @@ import { puzzleConfig } from "./config";
 import { HouseJigsaw } from "./puzzles/houseJigsaw/HouseJigsaw";
 import { FindDifferences } from "./puzzles/findDifferences/FindDifferences";
 import { Phone } from "./puzzles/phone/Phone";
+import { SecurityPanel } from "./puzzles/securityPanel/SecurityPanel";
 
 type Props = {
   puzzles: Puzzle[];
@@ -33,6 +34,11 @@ export const Scene2 = ({ puzzles }: Props) => {
     isModalOpen: isPhoneOpen,
     openModal: openPhone,
     closeModal: closePhone,
+  } = useModal();
+  const {
+    isModalOpen: isSecurityPanelOpen,
+    openModal: openSecurityPanel,
+    closeModal: closeSecurityPanel,
   } = useModal();
   const isHouseJigsawSolved =
     state.context.solvedPuzzles[Puzzles.houseJigsaw.name];
@@ -63,6 +69,13 @@ export const Scene2 = ({ puzzles }: Props) => {
           alt="Open Phone"
           className="left-[70%] top-[55%] w-[90px] lg:w-[110px] xl:w-[130px] 2xl:w-[150px]"
           action={openPhone}
+        />
+
+        <PuzzleTrigger
+          image={puzzleConfig.securityPanel.thumbnail}
+          alt="Open Security Panel"
+          className="left-[8%] top-[32%] w-[55px] lg:w-[70px] xl:w-[85px]"
+          action={openSecurityPanel}
         />
 
         <PuzzleModal
@@ -107,6 +120,13 @@ export const Scene2 = ({ puzzles }: Props) => {
           ) : (
             <Phone close={closePhone} />
           )}
+        </PuzzleModal>
+
+        <PuzzleModal
+          isPuzzleOpen={isSecurityPanelOpen}
+          closePuzzle={closeSecurityPanel}
+        >
+          <SecurityPanel close={closeSecurityPanel} />
         </PuzzleModal>
       </div>
     </SceneWrapper>
