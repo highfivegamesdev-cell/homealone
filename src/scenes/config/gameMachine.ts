@@ -53,6 +53,10 @@ export const createGameMachine = () => {
                   ...context.solvedPuzzles,
                   [puzzle.id]: true,
                 },
+                inventory:
+                  puzzle.item && !context.inventory.includes(puzzle.item)
+                    ? [...context.inventory, puzzle.item]
+                    : context.inventory,
               };
             }),
           },

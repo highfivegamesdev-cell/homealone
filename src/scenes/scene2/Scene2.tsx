@@ -88,6 +88,7 @@ export const Scene2 = ({ puzzles }: Props) => {
           {isFindDifferencesSolved ? (
             <PuzzleCompleted
               message={puzzleConfig.findDifferences.summary}
+              image={puzzleConfig.findDifferences.item}
               details={puzzleConfig.findDifferences.details}
               close={closeFindDifferences}
             />

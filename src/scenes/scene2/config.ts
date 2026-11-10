@@ -18,6 +18,7 @@ export const puzzleConfig = {
       "/images/scenes/scene2/puzzles/findDifferences/findDifferences-puzzle1.png",
     puzzle2:
       "/images/scenes/scene2/puzzles/findDifferences/findDifferences-puzzle2.png",
+    item: '/images/scenes/scene2/puzzles/findDifferences/screwdriver.png'
   },
   phone: {
     summary: "The puzzle is complete!",

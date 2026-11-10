@@ -59,6 +59,7 @@ export const scenesConfig: SceneConfig[] = [
       {
         id: Puzzles.findDifferences.name,
         answer: Puzzles.findDifferences.answer,
+        item: "screwdriver",
       },
       { id: Puzzles.phone.name, answer: Puzzles.phone.answer },
     ],
