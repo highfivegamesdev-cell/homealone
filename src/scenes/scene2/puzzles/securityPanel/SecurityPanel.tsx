@@ -36,8 +36,9 @@ export const SecurityPanel = ({ close }: Props) => {
     setFirstPassword(value);
     if (
       value.toLowerCase() === "happy" &&
-      secondPassword.toLowerCase() === "hollidays"
+      secondPassword.toLowerCase() === "holidays"
     ) {
+      setHint("You insert the batteries, and the panel starts working.");
       setPanelState("working");
     }
   };
@@ -46,8 +47,9 @@ export const SecurityPanel = ({ close }: Props) => {
     setSecondPassword(value);
     if (
       firstPassword.toLowerCase() === "happy" &&
-      value.toLowerCase() === "hollidays"
+      value.toLowerCase() === "holidays"
     ) {
+      setHint("You insert the batteries, and the panel starts working.");
       setPanelState("working");
     }
   };
@@ -77,7 +79,7 @@ export const SecurityPanel = ({ close }: Props) => {
             onSecondPasswordChange={handleSecondPasswordChange}
           />
         )}
-        {panelState === "working" && <WorkingSecurityPanel />}
+        {panelState === "working" && <WorkingSecurityPanel setHint={setHint} />}
       </div>
       {hint && (
         <p

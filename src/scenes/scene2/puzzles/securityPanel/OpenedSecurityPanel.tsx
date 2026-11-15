@@ -8,7 +8,7 @@ type Props = {
 };
 
 const inputClassName =
-  "w-full rounded border border-gray-500 bg-white/90 px-1 text-center text-xs text-black outline-none focus:border-blue-600 md:text-base";
+  "h-10 w-full rounded border-2 border-gray-400 bg-slate-950/90 px-3 text-center text-base text-white outline-none focus:border-yellow-300 md:h-12 md:text-xl";
 
 export const OpenedSecurityPanel = ({
   firstPassword,
@@ -22,7 +22,7 @@ export const OpenedSecurityPanel = ({
       alt="Opened security panel"
       className="h-full w-full object-contain"
     />
-    <label className="absolute left-1/2 top-[57%] w-[20%] -translate-x-1/2 -translate-y-1/2">
+    <label className="absolute left-[36%] top-[56%] w-[32%]">
       <span className="sr-only">First battery password</span>
       <input
         type="text"
@@ -33,7 +33,7 @@ export const OpenedSecurityPanel = ({
         className={inputClassName}
       />
     </label>
-    <label className="absolute left-1/2 top-[77%] w-[20%] -translate-x-1/2 -translate-y-1/2">
+    <label className="absolute left-[36%] top-[76.5%] w-[32%]">
       <span className="sr-only">Second battery password</span>
       <input
         type="text"

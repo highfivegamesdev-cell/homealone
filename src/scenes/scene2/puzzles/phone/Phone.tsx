@@ -16,8 +16,6 @@ export const Phone = ({ close }: Props) => {
   const [hasError, setHasError] = useState(false);
   const { code } = puzzleConfig.phone;
 
-  console.log("enteredNumber:", enteredNumber);
-
   useEffect(() => {
     if (enteredNumber !== code) return;
 
