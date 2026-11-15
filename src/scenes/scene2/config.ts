@@ -18,6 +18,7 @@ export const puzzleConfig = {
       "/images/scenes/scene2/puzzles/findDifferences/findDifferences-puzzle1.png",
     puzzle2:
       "/images/scenes/scene2/puzzles/findDifferences/findDifferences-puzzle2.png",
+    item: '/images/scenes/scene2/puzzles/findDifferences/screwdriver.png'
   },
   phone: {
     summary: "The puzzle is complete!",
@@ -26,4 +27,11 @@ export const puzzleConfig = {
     thumbnail: "/images/scenes/scene2/puzzles/phone/phone-thumbnail.png",
     puzzle: "/images/scenes/scene2/puzzles/phone/phone-puzzle.png",
   },
+  securityPanel: {
+    summary: "The puzzle is complete!",
+    code: "1990",
+    thumbnail: "/images/scenes/scene2/puzzles/securityPanel/securityPanel-thumbnail.png",
+    closed: "/images/scenes/scene2/puzzles/securityPanel/securityPanel-closed.png",
+    opened: "/images/scenes/scene2/puzzles/securityPanel/securityPanel-opened.png",
+  }
 };
