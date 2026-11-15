@@ -29,6 +29,7 @@ export const puzzleConfig = {
   },
   securityPanel: {
     summary: "The puzzle is complete!",
+    code: "1990",
     thumbnail: "/images/scenes/scene2/puzzles/securityPanel/securityPanel-thumbnail.png",
     closed: "/images/scenes/scene2/puzzles/securityPanel/securityPanel-closed.png",
     opened: "/images/scenes/scene2/puzzles/securityPanel/securityPanel-opened.png",

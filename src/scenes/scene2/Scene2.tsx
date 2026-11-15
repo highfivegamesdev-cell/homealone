@@ -11,14 +11,13 @@ import { HouseJigsaw } from "./puzzles/houseJigsaw/HouseJigsaw";
 import { FindDifferences } from "./puzzles/findDifferences/FindDifferences";
 import { Phone } from "./puzzles/phone/Phone";
 import { SecurityPanel } from "./puzzles/securityPanel/SecurityPanel";
+import { GameCompleted } from "./GameCompleted";
 
 type Props = {
   puzzles: Puzzle[];
 };
 
 export const Scene2 = ({ puzzles }: Props) => {
-  void puzzles;
-
   const { state } = useGame();
   const {
     isModalOpen: isHouseJigsawOpen,
@@ -45,7 +44,16 @@ export const Scene2 = ({ puzzles }: Props) => {
   const isFindDifferencesSolved =
     state.context.solvedPuzzles[Puzzles.findDifferences.name];
   const isPhoneSolved = state.context.solvedPuzzles[Puzzles.phone.name];
+  const isSecurityPanelSolved =
+    state.context.solvedPuzzles[Puzzles.securityPanel.name];
+  const allPuzzlesSolved =
+    puzzles.length > 0 &&
+    puzzles.every((puzzle) => state.context.solvedPuzzles[puzzle.id]);
   const background = "/images/scenes/scene2/scene2-background.png";
+
+  if (allPuzzlesSolved) {
+    return <GameCompleted />;
+  }
 
   return (
     <SceneWrapper backgroundUrl={background}>
@@ -126,7 +134,14 @@ export const Scene2 = ({ puzzles }: Props) => {
           isPuzzleOpen={isSecurityPanelOpen}
           closePuzzle={closeSecurityPanel}
         >
-          <SecurityPanel close={closeSecurityPanel} />
+          {isSecurityPanelSolved ? (
+            <PuzzleCompleted
+              message={puzzleConfig.securityPanel.summary}
+              close={closeSecurityPanel}
+            />
+          ) : (
+            <SecurityPanel close={closeSecurityPanel} />
+          )}
         </PuzzleModal>
       </div>
     </SceneWrapper>

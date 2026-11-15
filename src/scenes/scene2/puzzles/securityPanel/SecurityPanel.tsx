@@ -2,16 +2,55 @@ import { useState } from "react";
 
 import { PuzzleWrapper } from "@/components/layout/PuzzleWrapper";
 import { useGame } from "@/scenes/config/useGame";
-import { puzzleConfig } from "@/scenes/scene2/config";
+import { ClosedSecurityPanel } from "./ClosedSecurityPanel";
+import { OpenedSecurityPanel } from "./OpenedSecurityPanel";
+import { WorkingSecurityPanel } from "./WorkingSecurityPanel";
 
 type Props = {
   close: () => void;
 };
 
+type PanelState = "closed" | "opened" | "working";
+
 export const SecurityPanel = ({ close }: Props) => {
   const { state } = useGame();
-  const [isOpened, setIsOpened] = useState(false);
+  const [panelState, setPanelState] = useState<PanelState>("closed");
+  const [firstPassword, setFirstPassword] = useState("");
+  const [secondPassword, setSecondPassword] = useState("");
+  const [hint, setHint] = useState("");
   const hasScrewdriver = state.context.inventory.includes("screwdriver");
+
+  const handleClosedPanelClick = () => {
+    if (!hasScrewdriver) {
+      setHint("You need something to help you pry open the cover");
+      return;
+    }
+
+    setHint(
+      "You decided to use the screwdriver you found to pry open the cover",
+    );
+    setPanelState("opened");
+  };
+
+  const handleFirstPasswordChange = (value: string) => {
+    setFirstPassword(value);
+    if (
+      value.toLowerCase() === "happy" &&
+      secondPassword.toLowerCase() === "hollidays"
+    ) {
+      setPanelState("working");
+    }
+  };
+
+  const handleSecondPasswordChange = (value: string) => {
+    setSecondPassword(value);
+    if (
+      firstPassword.toLowerCase() === "happy" &&
+      value.toLowerCase() === "hollidays"
+    ) {
+      setPanelState("working");
+    }
+  };
 
   return (
     <PuzzleWrapper backgroundUrl="">
@@ -23,30 +62,31 @@ export const SecurityPanel = ({ close }: Props) => {
         ×
       </button>
 
-      <button
-        type="button"
-        aria-label={
-          isOpened
-            ? "Security panel opened"
-            : hasScrewdriver
-              ? "Open security panel with screwdriver"
-              : "Security panel is not working"
-        }
-        aria-pressed={isOpened}
-        disabled={!hasScrewdriver || isOpened}
-        onClick={() => setIsOpened(true)}
-        className="absolute inset-0 h-full w-full disabled:cursor-not-allowed"
-      >
-        <img
-          src={
-            isOpened
-              ? puzzleConfig.securityPanel.opened
-              : puzzleConfig.securityPanel.closed
-          }
-          alt={isOpened ? "Opened security panel" : "Closed security panel"}
-          className="h-full w-full object-contain"
-        />
-      </button>
+      <div className="absolute inset-0">
+        {panelState === "closed" && (
+          <ClosedSecurityPanel
+            hasScrewdriver={hasScrewdriver}
+            onClick={handleClosedPanelClick}
+          />
+        )}
+        {panelState === "opened" && (
+          <OpenedSecurityPanel
+            firstPassword={firstPassword}
+            secondPassword={secondPassword}
+            onFirstPasswordChange={handleFirstPasswordChange}
+            onSecondPasswordChange={handleSecondPasswordChange}
+          />
+        )}
+        {panelState === "working" && <WorkingSecurityPanel />}
+      </div>
+      {hint && (
+        <p
+          role="status"
+          className="absolute left-1/2 top-[4%] z-10 -translate-x-1/2 rounded bg-black/80 px-3 py-2 text-center text-sm text-white md:text-base"
+        >
+          {hint}
+        </p>
+      )}
     </PuzzleWrapper>
   );
 };

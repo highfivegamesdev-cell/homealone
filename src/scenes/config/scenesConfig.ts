@@ -39,6 +39,10 @@ export const Puzzles = {
     name: "phone",
     answer: "PHONE_SOLVED",
   },
+  securityPanel: {
+    name: "securityPanel",
+    answer: "SECURITY_PANEL_SOLVED",
+  },
 } as const;
 
 export const scenesConfig: SceneConfig[] = [
@@ -62,6 +66,10 @@ export const scenesConfig: SceneConfig[] = [
         item: "screwdriver",
       },
       { id: Puzzles.phone.name, answer: Puzzles.phone.answer },
+      {
+        id: Puzzles.securityPanel.name,
+        answer: Puzzles.securityPanel.answer,
+      },
     ],
     next: "exit",
   },
