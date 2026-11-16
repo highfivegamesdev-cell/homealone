@@ -18,6 +18,7 @@ declare module "headbreaker" {
 
     readonly puzzle: {
       readonly connected: boolean;
+      readonly pieces: readonly unknown[];
     };
 
     adjustImagesToPuzzleHeight(): void;
