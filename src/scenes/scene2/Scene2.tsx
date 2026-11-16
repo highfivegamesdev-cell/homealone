@@ -18,6 +18,8 @@ type Props = {
 };
 
 export const Scene2 = ({ puzzles }: Props) => {
+  void puzzles;
+
   const { state } = useGame();
   const {
     isModalOpen: isHouseJigsawOpen,
@@ -46,12 +48,9 @@ export const Scene2 = ({ puzzles }: Props) => {
   const isPhoneSolved = state.context.solvedPuzzles[Puzzles.phone.name];
   const isSecurityPanelSolved =
     state.context.solvedPuzzles[Puzzles.securityPanel.name];
-  const allPuzzlesSolved =
-    puzzles.length > 0 &&
-    puzzles.every((puzzle) => state.context.solvedPuzzles[puzzle.id]);
   const background = "/images/scenes/scene2/scene2-background.jpeg";
 
-  if (allPuzzlesSolved) {
+  if (isSecurityPanelSolved) {
     return <GameCompleted />;
   }
 
