@@ -49,7 +49,7 @@ export const Scene2 = ({ puzzles }: Props) => {
   const allPuzzlesSolved =
     puzzles.length > 0 &&
     puzzles.every((puzzle) => state.context.solvedPuzzles[puzzle.id]);
-  const background = "/images/scenes/scene2/scene2-background.png";
+  const background = "/images/scenes/scene2/scene2-background.jpeg";
 
   if (allPuzzlesSolved) {
     return <GameCompleted />;
@@ -82,7 +82,7 @@ export const Scene2 = ({ puzzles }: Props) => {
         <PuzzleTrigger
           image={puzzleConfig.securityPanel.thumbnail}
           alt="Open Security Panel"
-          className="left-[8%] top-[32%] w-[55px] lg:w-[70px] xl:w-[85px]"
+          className="left-[9.5%] top-[32%] w-[35px] lg:w-[45px] xl:w-[55px]"
           action={openSecurityPanel}
         />
 
