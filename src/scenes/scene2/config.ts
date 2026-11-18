@@ -1,7 +1,7 @@
 export const puzzleConfig = {
   houseJigsaw: {
     summary: "The puzzle is complete!",
-    details: ["60093", "yapHp"],
+    details: ["60093", "P Y A H P"],
     image: "",
     thumbnail:
       "/images/scenes/scene2/puzzles/houseJigsaw/houseJigsaw-thumbnail.png",
@@ -10,7 +10,7 @@ export const puzzleConfig = {
   },
   findDifferences: {
     summary: "The puzzle is complete!",
-    details: ["670", "lyslHasdio"],
+    details: ["670", "S A D I Y L O H"],
     thumbnail:
       "/images/scenes/scene2/puzzles/findDifferences/findDifferences-thumbnail.png",
     background: "",
