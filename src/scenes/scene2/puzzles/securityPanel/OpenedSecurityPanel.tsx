@@ -22,6 +22,10 @@ export const OpenedSecurityPanel = ({
       alt="Opened security panel"
       className="h-full w-full object-contain"
     />
+    <p className="absolute left-1/2 top-[15%] z-10 w-[84%] -translate-x-1/2 rounded bg-black/80 px-3 py-2 text-center text-sm text-white md:text-lg">
+      “What were the two ciphers I found? P Y A H P and S A D I Y L O H?
+      Maybe if I decipher those... I better hurry!”
+    </p>
     <label className="absolute left-[36%] top-[56%] w-[32%]">
       <span className="sr-only">First battery password</span>
       <input
