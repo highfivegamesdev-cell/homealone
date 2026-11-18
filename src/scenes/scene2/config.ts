@@ -10,7 +10,7 @@ export const puzzleConfig = {
   },
   findDifferences: {
     summary: "The puzzle is complete!",
-    details: ["671", "lyslHasdio"],
+    details: ["670", "lyslHasdio"],
     thumbnail:
       "/images/scenes/scene2/puzzles/findDifferences/findDifferences-thumbnail.png",
     background: "",
