@@ -52,23 +52,11 @@ export const JigsawGame = () => {
     image.onload = () => {
       if (!isActive || !canvasRef.current) return;
 
-      const verticalPiecesCount = jigsawConfig.verticalPiecesCount;
-      const horizontalPiecesCount = Math.round(
-        verticalPiecesCount * (image.naturalWidth / image.naturalHeight),
-      );
-      const pieceSize = Math.floor(
-        Math.min(
-          (canvasSize.width - 2 * jigsawConfig.canvasPadding) /
-          (horizontalPiecesCount + 1),
-          (canvasSize.height - 2 * jigsawConfig.canvasPadding) /
-          (verticalPiecesCount + 1),
-        ) * jigsawConfig.pieceSizeScale,
-      );
-
-      if (pieceSize < 1) {
-        console.error("The jigsaw canvas is too small to fit its pieces.");
-        return;
-      }
+      const { horizontalPiecesCount, verticalPiecesCount } = jigsawConfig;
+      const pieceSize =
+        canvasSize.width >= jigsawConfig.largeCanvasMinWidth
+          ? jigsawConfig.pieceSize.large
+          : jigsawConfig.pieceSize.compact;
 
       const canvas = new Canvas(canvasId, {
         width: canvasSize.width,
