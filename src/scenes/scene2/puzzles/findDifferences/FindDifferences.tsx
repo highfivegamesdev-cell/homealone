@@ -36,8 +36,8 @@ export const FindDifferences = ({ close }: Props) => {
   };
 
   const renderImage = (src: string, alt: string) => (
-    <div className="relative w-full shrink-0 md:w-[calc(50%-0.25rem)]">
-      <img src={src} alt={alt} className="block h-auto w-full" />
+    <div className="relative aspect-[3/2] w-full max-w-[1000px]">
+      <img src={src} alt={alt} className="block h-full w-full" />
       {differencePoints.map(({ x, y }, index) => {
         const isFound = foundDifferences.has(index);
 
@@ -48,10 +48,11 @@ export const FindDifferences = ({ close }: Props) => {
             aria-label={`Difference ${index + 1}`}
             aria-pressed={isFound}
             onClick={() => markDifferenceFound(index)}
-            className={`absolute z-10 h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-transparent transition-colors ${isFound
-              ? "border-yellow-300 shadow-[0_0_10px_rgba(253,224,71,0.95)]"
-              : "border-transparent"
-              }`}
+            className={`absolute z-10 size-[clamp(2rem,4vw,3.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-transparent transition-colors ${
+              isFound
+                ? "border-yellow-300 shadow-[0_0_10px_rgba(253,224,71,0.95)]"
+                : "border-transparent"
+            }`}
             style={{ left: `${x}%`, top: `${y}%` }}
           />
         );
@@ -60,16 +61,19 @@ export const FindDifferences = ({ close }: Props) => {
   );
 
   return (
-    <PuzzleWrapper backgroundUrl={puzzleConfig.findDifferences.background}>
+    <PuzzleWrapper
+      backgroundUrl={puzzleConfig.findDifferences.background}
+      fullScreen
+    >
       <button
         onClick={close}
         aria-label="Close puzzle"
-        className="absolute right-[3%] top-[1%] z-20 text-4xl font-bold text-black hover:cursor-pointer"
+        className="absolute right-4 top-2 z-20 text-4xl font-bold text-white hover:cursor-pointer"
       >
         ×
       </button>
 
-      <div className="flex h-full flex-col items-center gap-3 overflow-y-auto p-4 pt-12 md:flex-row md:justify-center md:gap-2 md:pt-4">
+      <div className="grid h-full grid-cols-1 items-center justify-items-center gap-2 overflow-auto p-2 pt-12 sm:grid-cols-2 sm:pt-2">
         {renderImage(puzzleConfig.findDifferences.puzzle1, "Puzzle 1")}
         {renderImage(puzzleConfig.findDifferences.puzzle2, "Puzzle 2")}
       </div>
