@@ -6,7 +6,7 @@ export const puzzleConfig = {
     thumbnail:
       "/images/scenes/scene2/puzzles/houseJigsaw/houseJigsaw-thumbnail.png",
     background: "",
-    puzzle: "/images/scenes/scene2/puzzles/houseJigsaw/houseJigsaw-puzzle.png",
+    puzzle: "/images/scenes/scene2/puzzles/houseJigsaw/houseJigsaw-puzzle.jpeg",
   },
   findDifferences: {
     summary: "The puzzle is complete!",
