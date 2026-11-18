@@ -59,6 +59,7 @@ export const Cookies = ({ close }: Props) => {
           Oh no! The baby gate locked when I ran down here! What was the code
           again?
         </p>
+        <p className="mt-4 font-semibold">B = 2</p>
 
         <div className="mt-12">
           <form onSubmit={onSubmit} className="flex gap-6 justify-center">
