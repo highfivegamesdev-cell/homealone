@@ -1,68 +1,58 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Canvas, painters } from "headbreaker";
-import { useGame } from "@/scenes/config/useGame";
-import { GameEventTypes } from "@/scenes/config/gameMachine";
-import { Puzzles } from "@/scenes/config/scenesConfig";
 import { puzzleConfig } from "@/scenes/scene2/config";
-import { jigsawConfig } from "@/scenes/scene2/puzzles/houseJigsaw/config";
+import { useGame } from "@/scenes/config/useGame";
+import { Puzzles } from "@/scenes/config/scenesConfig";
+import { GameEventTypes } from "@/scenes/config/gameMachine";
+import { useTailwindBreakpoint } from "@/lib/hooks/useTailwindBreakpoint";
+import { canvasConfig } from "@/scenes/scene2/puzzles/houseJigsaw/config";
+import type { JigsawPiece } from "headbreaker";
 
-const canvasId = "house-jigsaw-puzzle";
+const isSingleConnectedBlock = (pieces: readonly JigsawPiece[]) => {
+  if (pieces.length === 0) return false;
 
-type CanvasSize = {
-  width: number;
-  height: number;
+  const visited = new Set<JigsawPiece>();
+  const pending = [pieces[0]];
+
+  while (pending.length > 0) {
+    const piece = pending.pop();
+    if (!piece || visited.has(piece)) continue;
+
+    visited.add(piece);
+    pending.push(
+      ...piece.presentConnections.filter((connectedPiece) => !visited.has(connectedPiece)),
+    );
+  }
+
+  return visited.size === pieces.length;
 };
 
 export const JigsawGame = () => {
-  const viewportRef = useRef<HTMLDivElement | null>(null);
-  const canvasRef = useRef<HTMLDivElement | null>(null);
-  const [canvasSize, setCanvasSize] = useState<CanvasSize | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const { send } = useGame();
-  const puzzleImage = puzzleConfig.houseJigsaw.puzzle;
+  const id = "jigsaw-puzzle";
+
+  const breakpoint = useTailwindBreakpoint();
+
+  const width = canvasConfig[breakpoint].width;
+  const height = canvasConfig[breakpoint].height;
+  const pieceSize = canvasConfig[breakpoint].pieceSize;
 
   useEffect(() => {
-    const viewport = viewportRef.current;
-    if (!viewport) return;
+    if (!containerRef.current) return;
 
-    const observer = new ResizeObserver(([entry]) => {
-      const nextSize = {
-        width: Math.floor(entry.contentRect.width),
-        height: Math.floor(entry.contentRect.height),
-      };
+    const img = new Image();
+    img.src = puzzleConfig.houseJigsaw.puzzle;
 
-      setCanvasSize((currentSize) =>
-        currentSize?.width === nextSize.width &&
-          currentSize.height === nextSize.height
-          ? currentSize
-          : nextSize,
-      );
-    });
+    img.onload = () => {
+      const horizontalPiecesCount = 6;
+      const verticalPiecesCount = 6;
 
-    observer.observe(viewport);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const canvasContainer = canvasRef.current;
-    if (!canvasContainer || !canvasSize?.width || !canvasSize.height) return;
-
-    const image = new Image();
-    let isActive = true;
-
-    image.onload = () => {
-      if (!isActive || !canvasRef.current) return;
-
-      const { horizontalPiecesCount, verticalPiecesCount } = jigsawConfig;
-      const pieceSize =
-        canvasSize.width >= jigsawConfig.largeCanvasMinWidth
-          ? jigsawConfig.pieceSize.large
-          : jigsawConfig.pieceSize.compact;
-
-      const canvas = new Canvas(canvasId, {
-        width: canvasSize.width,
-        height: canvasSize.height,
-        image,
-        pieceSize,
+      const canvas = new Canvas(id, {
+        width: width,
+        height: height,
+        image: img,
+        pieceSize: pieceSize,
         proximity: 20,
         borderFill: 10,
         strokeWidth: 1.5,
@@ -74,19 +64,22 @@ export const JigsawGame = () => {
 
       canvas.adjustImagesToPuzzleHeight();
       canvas.autogenerate({ horizontalPiecesCount, verticalPiecesCount });
-      const expectedPiecesCount = horizontalPiecesCount * verticalPiecesCount;
-      if (canvas.puzzle.pieces.length !== expectedPiecesCount) {
-        console.error(
-          `Expected ${expectedPiecesCount} jigsaw pieces, but generated ${canvas.puzzle.pieces.length}.`,
-        );
-        return;
-      }
+      canvas.attachSolvedValidator();
       canvas.shuffle(0.7);
       canvas.draw();
 
       let reported = false;
       canvas.onConnect(() => {
-        if (!reported && canvas.puzzle.connected) {
+        canvas.puzzle.updateValidity();
+
+        const pieces = canvas.puzzle.pieces;
+        const expectedPiecesCount = horizontalPiecesCount * verticalPiecesCount;
+        if (
+          !reported &&
+          pieces.length === expectedPiecesCount &&
+          canvas.puzzle.valid &&
+          isSingleConnectedBlock(pieces)
+        ) {
           reported = true;
           send({
             type: GameEventTypes.solvePuzzle,
@@ -96,25 +89,16 @@ export const JigsawGame = () => {
         }
       });
     };
-    image.onerror = () => {
-      console.error(`Failed to load the jigsaw image: ${puzzleImage}`);
-    };
-    image.src = puzzleImage;
 
     return () => {
-      isActive = false;
-      image.onload = null;
-      image.onerror = null;
-      canvasContainer.innerHTML = "";
+      const node = document.getElementById(id);
+      if (node) node.innerHTML = "";
     };
-  }, [canvasSize, puzzleImage, send]);
+  }, []);
 
   return (
-    <div
-      ref={viewportRef}
-      className="flex h-full w-full items-center justify-center overflow-hidden"
-    >
-      <div ref={canvasRef} id={canvasId} className="relative h-full w-full" />
+    <div className="bg-taupe-300 w-full h-full flex items-center justify-center overflow-auto">
+      <div ref={containerRef} id={id} className="relative" />
     </div>
   );
 };

@@ -11,8 +11,8 @@ export const HouseJigsaw = ({ close }: Props) => {
     <PuzzleWrapper backgroundUrl={puzzleConfig.houseJigsaw.background}>
       <button
         onClick={close}
-        aria-label="Close puzzle"
-        className="absolute top-[1%] right-[3%] z-10 text-black text-4xl font-bold hover:cursor-pointer"
+        aria-label="Close jigsaw puzzle"
+        className="absolute right-[3%] top-[1%] z-20 text-4xl font-bold text-black hover:cursor-pointer"
       >
         ×
       </button>
