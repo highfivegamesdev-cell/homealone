@@ -6,6 +6,26 @@ import { Puzzles } from "@/scenes/config/scenesConfig";
 import { GameEventTypes } from "@/scenes/config/gameMachine";
 import { useTailwindBreakpoint } from "@/lib/hooks/useTailwindBreakpoint";
 import { canvasConfig } from "@/scenes/scene2/puzzles/houseJigsaw/config";
+import type { JigsawPiece } from "headbreaker";
+
+const isSingleConnectedBlock = (pieces: readonly JigsawPiece[]) => {
+  if (pieces.length === 0) return false;
+
+  const visited = new Set<JigsawPiece>();
+  const pending = [pieces[0]];
+
+  while (pending.length > 0) {
+    const piece = pending.pop();
+    if (!piece || visited.has(piece)) continue;
+
+    visited.add(piece);
+    pending.push(
+      ...piece.presentConnections.filter((connectedPiece) => !visited.has(connectedPiece)),
+    );
+  }
+
+  return visited.size === pieces.length;
+};
 
 export const JigsawGame = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -44,12 +64,22 @@ export const JigsawGame = () => {
 
       canvas.adjustImagesToPuzzleHeight();
       canvas.autogenerate({ horizontalPiecesCount, verticalPiecesCount });
+      canvas.attachSolvedValidator();
       canvas.shuffle(0.7);
       canvas.draw();
 
       let reported = false;
       canvas.onConnect(() => {
-        if (!reported && canvas.puzzle.connected) {
+        canvas.puzzle.updateValidity();
+
+        const pieces = canvas.puzzle.pieces;
+        const expectedPiecesCount = horizontalPiecesCount * verticalPiecesCount;
+        if (
+          !reported &&
+          pieces.length === expectedPiecesCount &&
+          canvas.puzzle.valid &&
+          isSingleConnectedBlock(pieces)
+        ) {
           reported = true;
           send({
             type: GameEventTypes.solvePuzzle,

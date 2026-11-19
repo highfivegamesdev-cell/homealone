@@ -1,4 +1,8 @@
 declare module "headbreaker" {
+  export type JigsawPiece = {
+    readonly presentConnections: readonly JigsawPiece[];
+  };
+
   type CanvasOptions = {
     width: number;
     height: number;
@@ -18,7 +22,9 @@ declare module "headbreaker" {
 
     readonly puzzle: {
       readonly connected: boolean;
-      readonly pieces: readonly unknown[];
+      readonly valid: boolean;
+      readonly pieces: readonly JigsawPiece[];
+      updateValidity(): void;
     };
 
     adjustImagesToPuzzleHeight(): void;
@@ -26,6 +32,7 @@ declare module "headbreaker" {
       horizontalPiecesCount: number;
       verticalPiecesCount: number;
     }): void;
+    attachSolvedValidator(): void;
     shuffle(factor: number): void;
     draw(): void;
     onConnect(callback: () => void): void;
